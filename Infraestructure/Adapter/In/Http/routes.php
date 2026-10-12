@@ -26,6 +26,13 @@ return function (Router $router, array $c): void {
     */
 
     $router->add('POST', '/api/auth/login',    [$c['auth'], 'login']);
+    /*
+            {
+            "identifier": "juan.perez@gmail.com",
+            "password": "Password123!"
+
+            }
+    */
     $router->add('POST', '/api/auth/refresh',  [$c['auth'], 'refresh']);
     $router->add('POST', '/api/auth/logout',   [$c['auth'], 'logout']);
 

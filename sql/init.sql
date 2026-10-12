@@ -184,3 +184,22 @@ CREATE TABLE sesiones_usuario (
     creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_sesiones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+CREATE TABLE sesiones_usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    refresh_token_hash CHAR(64) NOT NULL,
+    user_agent VARCHAR(255) NULL,
+    direccion_ip VARCHAR(45) NULL,
+    expira_en DATETIME NOT NULL,
+    revocado TINYINT(1) NOT NULL DEFAULT 0,
+    creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_sesiones_usuario
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuarios (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    INDEX idx_sesiones_refresh_token (refresh_token_hash),
+    INDEX idx_sesiones_usuario_id (usuario_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

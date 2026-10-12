@@ -23,7 +23,7 @@ final class TokenManagerJWT implements TokenManagerInterface {
         'rol_id' => $rol_id,
         'iat' => $now,
         'exp' => $now + $this->accessTlsSeconds,
-      ], $this->secret, 'H256');
+      ], $this->secret, 'HS256');
 
     }
 
