@@ -42,6 +42,13 @@ class Usuario
         ?DateTime $fecha_registro = null,
         ?int $id = null
     ) {
+        if ($institucion_id !== null && $institucion_id <= 0) {
+            throw new InvalidArgumentException('El ID de la institución no es válido.');
+        }
+
+        if ($carrera_id !== null && $carrera_id <= 0) {
+            throw new InvalidArgumentException('El ID de la carrera no es válido.');
+        }
         if (strlen($nombre) <= 2) {
             throw new InvalidArgumentException('La longitud del nombre es muy corta');
         }
