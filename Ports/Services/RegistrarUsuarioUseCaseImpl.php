@@ -10,7 +10,7 @@ use App\Ports\Out\PasswordHasherInterface;
 use App\Ports\Out\UserRepositoryInterface;
 use DomainException;
 
-final readonly class RegistrarUsuarioUseCaseImpl implements RegistrarUsuarioUseCaseInterface
+final class RegistrarUsuarioUseCaseImpl implements RegistrarUsuarioUseCaseInterface
 {
     public function __construct(
         private UserRepositoryInterface $usuarioRepository,

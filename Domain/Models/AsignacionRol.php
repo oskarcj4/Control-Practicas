@@ -2,7 +2,7 @@
 namespace App\Domain\Models;
 
 use InvalidArgumentException;
-final readonly class AsignacionRol{
+final class AsignacionRol{
   public int $usuario_id;
   public int $rol_id;
   public function __construct(int $usuario_id, int $rol_id){

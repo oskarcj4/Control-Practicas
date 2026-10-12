@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Domain\Models;
 
 use InvalidArgumentException;
-final readonly class HistorialEstadoPostulacion
+final class HistorialEstadoPostulacion
 {
     public ?int $id;
     public int $postulacion_id;

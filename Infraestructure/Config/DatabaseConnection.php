@@ -3,16 +3,16 @@ declare(strict_types= 1);
 
 namespace App\Infraestructure\Config;
 
-use Env;
 use PDO;
 
 final class DatabaseConnection{
   public static function fromEnv(): PDO {
     $dsn = sprintf(
-      'mysql:host=%s;dbname=%s;charset=%s',
-      Env::get('DATABASE_URL', 'localhost'),
-      Env::get('DATABASE_NAME'),
-      Env::get('DATABASE_CHARSET', 'utf8mb4'),
+        'mysql:host=%s;port=%d;dbname=%s;charset=%s',
+        Env::get('DATABASE_URL', 'localhost'),
+        Env::get('DATABASE_PORT', 3308),
+        Env::get('DATABASE_NAME'),
+        Env::get('DATABASE_CHARSET', 'utf8mb4'),
     );
 
     return new PDO(

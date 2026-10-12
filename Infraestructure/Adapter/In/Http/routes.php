@@ -5,6 +5,7 @@ use App\Infraestructure\Adapter\In\Http\Router;
 
 
 return function (Router $router, array $c): void {
+
     $router->add('POST', '/api/auth/register', [$c['auth'], 'register']);
     $router->add('POST', '/api/auth/login',    [$c['auth'], 'login']);
     $router->add('POST', '/api/auth/refresh',  [$c['auth'], 'refresh']);

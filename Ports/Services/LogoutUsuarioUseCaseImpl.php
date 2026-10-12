@@ -6,7 +6,7 @@ use App\Ports\In\Usuario\Logout\LogoutUseCaseInterface;
 use App\Ports\Out\SessionRepositoryInterface;
 use DomainException;
 
-final readonly class LogoutUsuarioUseCaseImpl implements LogoutUseCaseInterface {
+final class LogoutUsuarioUseCaseImpl implements LogoutUseCaseInterface {
 
   public function __construct(
     private SessionRepositoryInterface $sessionRepository
@@ -20,8 +20,8 @@ final readonly class LogoutUsuarioUseCaseImpl implements LogoutUseCaseInterface 
     $tokenHash= hash('sha256', $rawRefreshToken);
 
     $this->sessionRepository->revoke($tokenHash);
-      
+
   }
 
-  
+
 }

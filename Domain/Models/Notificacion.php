@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Domain\Models;
 
 use InvalidArgumentException;
-final readonly class Notificacion
+final class Notificacion
 {
     public ?int $id;
     public int $usuario_id;

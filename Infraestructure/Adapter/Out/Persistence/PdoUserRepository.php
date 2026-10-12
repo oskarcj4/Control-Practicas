@@ -9,7 +9,7 @@ use App\Ports\Out\UserRepositoryInterface;
 use DateTime;
 use PDO;
 
-final readonly class PdoUserRepository implements UserRepositoryInterface
+final class PdoUserRepository implements UserRepositoryInterface
 {
   public function __construct(private PDO $pdo) {}
 

@@ -10,7 +10,7 @@ use App\Ports\Out\UserRepositoryInterface;
 use DateTimeImmutable;
 use DomainException;
 
-final readonly class RefrescarTokenUseCaseImpl implements RefrescarTokenUseCaseInterface
+final class RefrescarTokenUseCaseImpl implements RefrescarTokenUseCaseInterface
 {
 
   public function __construct(
@@ -41,7 +41,7 @@ final readonly class RefrescarTokenUseCaseImpl implements RefrescarTokenUseCaseI
             accessToken: $nuevoAccessToken,
             expiresInSeconds: 900
         );
-    
+
   }
 
 

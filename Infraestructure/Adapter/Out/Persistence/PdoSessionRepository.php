@@ -9,7 +9,7 @@ use DateTime;
 use DateTimeImmutable;
 use PDO;
 
-final readonly class PdoSessionRepository implements SessionRepositoryInterface
+final class PdoSessionRepository implements SessionRepositoryInterface
 {
   public function __construct(private PDO $pdo) {}
 

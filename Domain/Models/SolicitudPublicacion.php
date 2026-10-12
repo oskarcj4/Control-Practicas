@@ -4,7 +4,7 @@ namespace App\Domain\Models;
 
 use InvalidArgumentException;
 
-final readonly class SolicitudPublicacion
+final class SolicitudPublicacion
 {
     public ?int $id;
     public int $usuario_id;

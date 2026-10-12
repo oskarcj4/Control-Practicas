@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Domain\Models;
 
 use InvalidArgumentException;
-final readonly class Carrera
+final class Carrera
 {
     public ?int $id;
     public int $institucion_id;

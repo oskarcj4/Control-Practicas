@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Infraestructure\Adapter\In\Http;
 
-final readonly class JsonResponse
+final class JsonResponse
 {
     public function __construct(
         public int $status,

@@ -11,7 +11,7 @@ use App\Ports\In\Usuario\Registrar\RegistrarUsuarioCommandRequest;
 use App\Ports\In\Usuario\Registrar\RegistrarUsuarioUseCaseInterface;
 use App\Ports\In\Usuario\Token\RefrescarTokenUseCaseInterface;
 
-final readonly class AuthController
+final class AuthController
 {
     public function __construct(
         private LoginUsuarioUseCaseInterface $login,

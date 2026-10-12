@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infraestructure\Security;
+namespace App\Infraestructure\Adapter\Out\Security;
 use App\Ports\Out\PasswordHasherInterface;
 
-final readonly class NativePasswordHasher implements PasswordHasherInterface
+final class NativePasswordHasher implements PasswordHasherInterface
 {
     public function __construct(
         private string|int|null $algo = PASSWORD_DEFAULT,

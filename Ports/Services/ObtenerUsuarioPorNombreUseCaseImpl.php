@@ -7,7 +7,7 @@ use App\Ports\Out\UserRepositoryInterface;
 use DomainException;
 
 
-final readonly class ObtenerUsuarioPorNombreUseCaseImpl implements ObtenerUsuarioPorNombreUseCaseInterface{
+final class ObtenerUsuarioPorNombreUseCaseImpl implements ObtenerUsuarioPorNombreUseCaseInterface{
 
     public function __construct(
         private UserRepositoryInterface $usuarioRepository

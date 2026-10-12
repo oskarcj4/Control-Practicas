@@ -9,7 +9,7 @@ use App\Infraestructure\Adapter\In\Http\Request;
 use App\Ports\In\Usuario\Obtener\ObtenerUsuarioPorIdUseCaseInterface;
 use App\Ports\In\Usuario\Obtener\ObtenerUsuarioPorNombreUseCaseInterface;
 
-final readonly class UsuarioController
+final class UsuarioController
 {
     public function __construct(
         private ObtenerUsuarioPorIdUseCaseInterface $porId,

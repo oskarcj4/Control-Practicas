@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 namespace App\Ports\Services;
-use App\Domain\Models\Usuario;
 use App\Ports\In\Usuario\Login\LoginCommandRequest;
 use App\Ports\In\Usuario\Login\LoginCommandResponse;
 use App\Ports\In\Usuario\Login\LoginUsuarioUseCaseInterface;
@@ -16,7 +15,7 @@ use DateTime;
 use DomainException;
 
 
-final readonly class LoginUsuarioUseCaseImpl implements LoginUsuarioUseCaseInterface
+final class LoginUsuarioUseCaseImpl implements LoginUsuarioUseCaseInterface
 {
 
   public function __construct(
@@ -48,6 +47,6 @@ final readonly class LoginUsuarioUseCaseImpl implements LoginUsuarioUseCaseInter
       $fechaExpiracion=(new DateTime())->modify('+30 days');
 
       $this->sessionRepository->save($user_request->id, $refreshTokenHash, $fechaExpiracion, $command->userAgent, $command->direccion_ip);
-      return new LoginCommandResponse($user_request->id, $user_request->username, $user_request->rol_id, $refreshToken, 900);
+      return new LoginCommandResponse($user_request->id, $user_request->username, $user_request->rol_id, $refreshToken, $accessToken, 900);
   }
 }

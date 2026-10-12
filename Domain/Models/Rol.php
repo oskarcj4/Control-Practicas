@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Domain\Models;
 
 use InvalidArgumentException;
-final readonly class Rol
+final class Rol
 {
     public ?int $id;
     public string $nombre;

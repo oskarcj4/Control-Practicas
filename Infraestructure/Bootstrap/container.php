@@ -20,6 +20,7 @@ use App\Ports\Services\RegistrarUsuarioUseCaseImpl;
 // handler de tokenManager se realiza aca, o si se quiere cambiar de base de datos.
 
 
+
 return function (): array {
     Env::load(dirname(__DIR__, 2) . '/.env');
 

@@ -7,7 +7,7 @@ use App\Ports\Out\TokenManagerInterface;
 use Firebase\JWT\JWT;
 
 
-final readonly class TokenManagerJWT implements TokenManagerInterface {
+final class TokenManagerJWT implements TokenManagerInterface {
     public function __construct(
         private string $secret,
         private int $accessTlsSeconds= 900
