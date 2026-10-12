@@ -6,10 +6,14 @@ namespace App\Infraestructure\Adapter\In\Http\Controllers;
 use App\Domain\Models\Usuario;
 use App\Infraestructure\Adapter\In\Http\JsonResponse;
 use App\Infraestructure\Adapter\In\Http\Request;
+use App\Ports\In\Usuario\Editar\EditarCommandRequest;
 use App\Ports\In\Usuario\Obtener\ObtenerUsuarioPorIdUseCaseInterface;
 use App\Ports\In\Usuario\Obtener\ObtenerUsuarioPorNombreUseCaseInterface;
 use App\Ports\In\Usuario\Editar\EditarUsuarioUseCaseInterface;
 use App\Ports\Out\TokenManagerInterface;
+use DomainException;
+use RuntimeException;
+use Throwable;
 final class UsuarioController
 {
     public function __construct(
@@ -37,7 +41,34 @@ final class UsuarioController
             return JsonResponse::error('El ID de usuario no es valido.', 400);
         }
 
-        $command = new Edita
+        $command = new EditarCommandRequest(
+            usuarioIdTarget: $targetId,
+            username: $request->input('username'),
+            nombre: $request->input('nombre'),
+            apellido: $request->input('apellido'),
+            email: $request->input('email'),
+            carnet: $request->input('carnet'),
+            institucion_id: $request->input('institucion_id') !== null ? (int) $request->input('institucion_id') : null,
+            carrera_id: $request->input('carrera_id') !== null ? (int) $request->input('carrera_id') : null,
+            telefono: $request->input('telefono'),
+            biografia: $request->input('biografia'),
+            authenticatedUserId: (int) $tokenPayload['user_id'],
+            authenticatedRolId: (int) $tokenPayload['rol_id']
+         );
+
+         try{
+            $this->editar->execute($command);
+            return JsonResponse::success("Usuario editado exitosamente", 201);
+         }
+         catch(DomainException $e){
+            return JsonResponse::error($e->getMessage(), 403);
+         }
+         catch(RuntimeException $e){
+            return JsonResponse::error($e->getMessage(), 404);
+         }
+         catch(Throwable $e){ //Usar $e para debugging
+            return JsonResponse::error('Error en el servidor', 500);
+         }
 
 
     }

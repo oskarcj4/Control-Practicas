@@ -51,6 +51,13 @@ return function (Router $router, array $c): void {
     */
 
     $router->add('GET', '/api/usuarios',      [$c['usuarios'], 'findByUsername']);
+
+    /*
+
+    */
+
+
+
     $router->add('GET', '/api/usuarios/{id}', [$c['usuarios'], 'show']);
 
     /*
