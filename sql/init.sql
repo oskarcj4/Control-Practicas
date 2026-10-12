@@ -61,7 +61,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
-    contraseña_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     rol_id INT NOT NULL,
     institucion_id INT NULL COMMENT 'FK a la institución/empresa registrada',
     carrera_id INT NULL COMMENT 'Aplica para estudiantes',

@@ -154,7 +154,7 @@ final class PdoUserRepository implements UserRepositoryInterface
         telefono: $row["telefono"],
         biografia: $row["biografia"],
         autorizado_publicar: (bool) $row["autorizado_publicar"],
-        estado: $row["estado"],
+        estado: $row["estado"] ?? 'activo', // Bug pendiente de corregir, devuelve un estado null
         fecha_registro: new DateTime($row["fecha_registro"]),
         id: (int) $row["id"],
     );
