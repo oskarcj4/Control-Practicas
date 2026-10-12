@@ -154,11 +154,62 @@ final class PdoUserRepository implements UserRepositoryInterface
         telefono: $row["telefono"],
         biografia: $row["biografia"],
         autorizado_publicar: (bool) $row["autorizado_publicar"],
-        estado: $row["estado"] ?? 'activo', // Bug pendiente de corregir, devuelve un estado null
+        estado: $row["estado"],
         fecha_registro: new DateTime($row["fecha_registro"]),
         id: (int) $row["id"],
     );
 
   }
 
+    public function existsByEmailExceptId(string $email, int $id): bool
+    {
+      $stmt = $this->pdo->prepare('SELECT 1 FROM usuarios WHERE id != :id AND email = :email');
+      $stmt->execute([
+        'email' => $email,
+        'id' => $id
+      ]);
+      return (bool) $stmt->fetchColumn();
+    }
+
+
+    public function updateProfile(int $id, string|null $username, string|null $nombre, string|null
+      $apellido, string|null $email, string|null $carnet, int|null $institucion_id,
+      int|null $carrera_id, string|null $telefono, string|null $biografia): void{
+
+      $fields = [
+            'username'       => $username,
+            'nombre'         => $nombre,
+            'apellido'       => $apellido,
+            'email'          => $email,
+            'carnet'         => $carnet,
+            'institucion_id' => $institucion_id,
+            'carrera_id'     => $carrera_id,
+            'telefono'       => $telefono,
+            'biografia'      => $biografia,
+        ];
+
+        $setClauses = [];
+        $params = ['id' => $id];
+
+        foreach ($fields as $column => $value) {
+            if ($value !== null) {
+                $setClauses[] = "{$column} = :{$column}";
+                $params[$column] = $value;
+            }
+        }
+
+        if (empty($setClauses)) {
+            return;
+        }
+        // El implode une los elemebtos de un array usando comas, al final la consulta queda como un unico string
+        // Dado que $setClauses hace: "{$column} = :{$column}", nos queda la sentencia preparada
+        $sql = 'UPDATE usuarios SET ' . implode(', ', $setClauses) . ' WHERE id = :id';
+
+        $stmt = $this->pdo->prepare($sql);
+
+        // Los parametros quedan listos mapeados usando el truco del array
+        $stmt->execute($params);
+
+
+    }
 }

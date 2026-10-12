@@ -10,6 +10,7 @@ final class Request
         public string $path,
         public array $query,
         public array $body,
+        public array $headers= [],
         public array $params = [],
         public ?string $userAgent = null,
         public ?string $ip = null,
@@ -26,11 +27,36 @@ final class Request
 
         $body = json_decode(file_get_contents('php://input') ?: '[]', true);
 
+
+        $headers = [];
+        if(function_exists('getallheaders')){
+
+            foreach(getallheaders() as $name => $value){
+                $headers[strtolower((string) $name)] = (string) $value;
+
+            }
+        }else {
+            foreach($_SERVER as $name => $value){
+                if(str_starts_with($name, 'HTTP_')){
+                    $headerName = strtolower(str_replace("_", "-", substr($name, 5)));
+                    $headers[$headerName] = (string) $value;
+                }
+            }
+        }
+
+        if (!isset($headers['authorization'])) {
+            if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+                $headers['authorization'] = (string) $_SERVER['HTTP_AUTHORIZATION'];
+            } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+                $headers['authorization'] = (string) $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+            }
+        }
         return new self(
             method: $_SERVER['REQUEST_METHOD'],
             path: '/' . trim($path, '/'),
             query: $_GET,
             body: is_array($body) ? $body : [],
+            headers: $headers,
             userAgent: $_SERVER['HTTP_USER_AGENT'] ?? null,
             ip: $_SERVER['REMOTE_ADDR'] ?? null,
         );
@@ -43,10 +69,26 @@ final class Request
             $this->path,
             $this->query,
             $this->body,
+            $this->headers,
             $params,
             $this->userAgent,
             $this->ip
         );
+    }
+
+    public function header(string $key, ?string $default = null): ?string
+    {
+        return $this->headers[strtolower($key)] ?? $default;
+    }
+
+    public function bearerToken(): ?string
+    {
+        $auth = $this->header('authorization');
+        if ($auth !== null && preg_match('/Bearer\s+(\S+)/i', $auth, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
     }
 
     public function input(string $key, mixed $default = null): mixed
