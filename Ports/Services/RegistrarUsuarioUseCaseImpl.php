@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Ports\Services;
 
+use App\Domain\Enums\EstadosUsuario;
 use App\Domain\Models\Usuario;
 use App\Ports\In\Usuario\Registrar\RegistrarUsuarioCommandRequest;
 use App\Ports\In\Usuario\Registrar\RegistrarUsuarioCommandResponse;
@@ -33,6 +34,7 @@ final class RegistrarUsuarioUseCaseImpl implements RegistrarUsuarioUseCaseInterf
         $usuario = new Usuario(
             username: $request->username,
             nombre: $request->nombre,
+            apellido: $request->apellido,
             email: $request->email,
             password_hash: $passwordHash,
             rol_id: 1,
@@ -42,6 +44,7 @@ final class RegistrarUsuarioUseCaseImpl implements RegistrarUsuarioUseCaseInterf
             telefono: $request->telefono,
             biografia: $request->biografia,
             autorizado_publicar: false,
+            estado: EstadosUsuario::ACTIVO
         );
 
         $this->usuarioRepository->save($usuario);

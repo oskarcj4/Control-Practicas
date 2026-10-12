@@ -33,7 +33,7 @@ final class PdoUserRepository implements UserRepositoryInterface
       'telefono' => $user->telefono(),
       'biografia' => $user->biografia(),
       'autorizado_publicar' => (int) $user->autorizado_publicar(),
-      'estado' => $user->estado()->value,
+      'estado' => $user->estado(),
       'fecha_registro' => $user->fecha_registro()->format('Y-m-d H:i:s'),
     ]);
 
@@ -69,13 +69,13 @@ final class PdoUserRepository implements UserRepositoryInterface
       telefono: $row["telefono"],
       biografia: $row["biografia"],
       autorizado_publicar: (bool) $row["autorizado_publicar"],
-      estado: EstadosUsuario::from($row["estado"]),
+      estado: $row["estado"],
       fecha_registro: new DateTime($row["fecha_registro"]),
       id: (int) $row["id"],
     );
   }
 
-  public function findByEmail(string $email): Usuario {
+  public function findByEmail(string $email): ?Usuario {
     $stmt = $this->pdo->prepare(
       "SELECT * FROM usuarios WHERE email = :email"
     );
@@ -101,7 +101,7 @@ final class PdoUserRepository implements UserRepositoryInterface
       telefono: $row["telefono"],
       biografia: $row["biografia"],
       autorizado_publicar: (bool) $row["autorizado_publicar"],
-      estado: EstadosUsuario::from($row["estado"]),
+      estado: $row["estado"],
       fecha_registro: new DateTime($row["fecha_registro"]),
       id: (int) $row["id"],
     );
@@ -110,7 +110,7 @@ final class PdoUserRepository implements UserRepositoryInterface
   public function findByUsername(string $username): ?Usuario{
     $stmt = $this->pdo->prepare("SELECT * FROM usuarios WHERE username=:username");
 
-    $stmt->execute([$username]);
+    $stmt->execute(['username'=>$username]);
 
     $row= $stmt->fetch(PDO::FETCH_ASSOC);
 

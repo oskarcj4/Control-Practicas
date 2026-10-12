@@ -2,8 +2,11 @@
 declare(strict_types= 1);
 namespace App\Domain\Enums;
 
-enum EstadosUsuario: string{
-  case ACTIVO ="activo";
-  case SUSPENDIDO="suspendido";
-  case ELIMINADO ="eliminado";
+final class EstadosUsuario
+{
+    public const ACTIVO = 'ACTIVO';
+    public const INACTIVO = 'INACTIVO';
+    public const PENDIENTE = 'PENDIENTE';
+
+    private function __construct() {}
 }

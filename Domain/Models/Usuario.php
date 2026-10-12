@@ -22,7 +22,7 @@ class Usuario
     public ?string $telefono;
     public ?string $biografia;
     public bool $autorizado_publicar;
-    public EstadosUsuario $estado;
+    public string $estado;
     public DateTime $fecha_registro;
 
     public function __construct(
@@ -38,7 +38,7 @@ class Usuario
         ?string $telefono = null,
         ?string $biografia = null,
         bool $autorizado_publicar = false,
-        EstadosUsuario $estado = EstadosUsuario::ACTIVO,
+        string $estado = EstadosUsuario::ACTIVO,
         ?DateTime $fecha_registro = null,
         ?int $id = null
     ) {
@@ -49,12 +49,15 @@ class Usuario
         if (strlen($apellido) <= 2) {
             throw new InvalidArgumentException('La longitud del apellido es muy corta');
         }
+
         if (strlen($username) <= 3) {
             throw new InvalidArgumentException('La longitud del username no es valida');
         }
+
         if (strlen($password_hash) < 8) {
             throw new InvalidArgumentException('La longitud de la contraseña debe ser de al menos 8 caracteres');
         }
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) <= 5) {
             throw new InvalidArgumentException("El email '{$email}' no es valido.");
         }
@@ -141,7 +144,7 @@ class Usuario
         return $this->autorizado_publicar;
     }
 
-    public function estado(): EstadosUsuario
+    public function estado(): string
     {
         return $this->estado;
     }
