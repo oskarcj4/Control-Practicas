@@ -8,14 +8,39 @@ use App\Infraestructure\Adapter\In\Http\JsonResponse;
 use App\Infraestructure\Adapter\In\Http\Request;
 use App\Ports\In\Usuario\Obtener\ObtenerUsuarioPorIdUseCaseInterface;
 use App\Ports\In\Usuario\Obtener\ObtenerUsuarioPorNombreUseCaseInterface;
-
+use App\Ports\In\Usuario\Editar\EditarUsuarioUseCaseInterface;
+use App\Ports\Out\TokenManagerInterface;
 final class UsuarioController
 {
     public function __construct(
         private ObtenerUsuarioPorIdUseCaseInterface $porId,
         private ObtenerUsuarioPorNombreUseCaseInterface $porNombre,
+        private EditarUsuarioUseCaseInterface $editar,
+        private TokenManagerInterface $token
     ) {}
 
+
+    public function edit(Request $request): JsonResponse{
+        $token =$request ->bearerToken();
+        if($token ===null){
+            return JsonResponse::error('Token de autorización no proporcionado.', 401);
+        }
+        try {
+            $tokenPayload = $this->token->validateAccessToken($token);
+        } catch (Throwable) {
+            return JsonResponse::error('Token inválido o expirado.', 401);
+        }
+
+        $targetId= (int) ($request->params["id"] ?? 0);
+
+        if ($targetId <= 0){
+            return JsonResponse::error('El ID de usuario no es valido.', 400);
+        }
+
+        $command = new Edita
+
+
+    }
     public function show(Request $request): JsonResponse
     {
         $usuario = $this->porId->execute((int) $request->params['id']);
@@ -42,7 +67,7 @@ final class UsuarioController
             'rol_id'         => $u->rol_id,
             'institucion_id' => $u->institucion_id,
             'carrera_id'     => $u->carrera_id,
-            'estado'         => $u->estado->value,
+            'estado'         => $u->estado,
         ];
     }
 }

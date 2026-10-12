@@ -4,9 +4,9 @@ namespace App\Domain\Enums;
 
 final class EstadosUsuario
 {
-    public const ACTIVO = 'ACTIVO';
-    public const INACTIVO = 'INACTIVO';
-    public const PENDIENTE = 'PENDIENTE';
+    public const ACTIVO = 'activo';
+    public const INACTIVO = 'inactivo';
+    public const SUSPENDIDO = 'suspendido';
 
     private function __construct() {}
 }
