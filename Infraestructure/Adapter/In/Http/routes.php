@@ -53,7 +53,7 @@ return function (Router $router, array $c): void {
     $router->add('GET', '/api/usuarios',      [$c['usuarios'], 'findByUsername']);
 
     /*
-
+        http://localhost/Control-Practicas/api/usuarios?username=usuario_prueba1
     */
 
 
@@ -65,4 +65,6 @@ return function (Router $router, array $c): void {
     GET http://localhost/Control-Practicas/api/usuarios/3
 
     */
+
+    $router->add('PUT', '/api/usuarios/{id}', [$c['usuarios'], 'edit']);
 };

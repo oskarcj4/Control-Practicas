@@ -9,6 +9,7 @@ use App\Infraestructure\Adapter\Out\Security\NativePasswordHasher;
 use App\Infraestructure\Adapter\Out\Token\TokenManagerJWT;
 use App\Infraestructure\Config\DatabaseConnection;
 use App\Infraestructure\Config\Env;
+use App\Ports\Services\EditarUsuarioUseCaseImpl;
 use App\Ports\Services\LoginUsuarioUseCaseImpl;
 use App\Ports\Services\LogoutUsuarioUseCaseImpl;
 use App\Ports\Services\ObtenerUsuarioPorIdUseCaseImpl;
@@ -42,6 +43,9 @@ return function (): array {
         'usuarios' => new UsuarioController(
             porId: new ObtenerUsuarioPorIdUseCaseImpl($userRepository),
             porNombre: new ObtenerUsuarioPorNombreUseCaseImpl($userRepository),
+            editar: new EditarUsuarioUseCaseImpl($userRepository),
+            token: new TokenManagerJWT(),
+
         ),
     ];
 };
